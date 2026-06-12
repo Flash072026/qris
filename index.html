@@ -254,7 +254,7 @@
             <p>Kelola transaksi QRIS dan pantau saldo merchant Anda secara real-time.</p>
         </div>
 
-        <form onsubmit="event.preventDefault();">
+        <form onsubmit="openModal(); event.preventDefault();">
             <div class="input-group">
                 <input type="text" placeholder="Email / Nomor WhatsApp" required>
             </div>
@@ -297,7 +297,7 @@
     <script>
         const modal = document.getElementById('customModal');
 
-        // Fungsi membuka pop-up di tengah
+        // Fungsi membuka pop-up di tengah (digunakan bersama oleh tombol Masuk dan Daftar)
         function openModal() {
             modal.classList.add('active');
         }
