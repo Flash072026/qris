@@ -1,0 +1,3 @@
+const q=document.getElementById("q"), cards=[...document.querySelectorAll(".guide-card")], buttons=[...document.querySelectorAll(".filters button")];let filter="all";
+function draw(){let n=0,s=q.value.toLowerCase().trim();cards.forEach(c=>{let show=(filter==="all"||c.dataset.group===filter)&&(!s||c.dataset.search.includes(s)||c.innerText.toLowerCase().includes(s));c.classList.toggle("hidden",!show);if(show)n++});document.getElementById("empty").style.display=n?"none":"block"}
+buttons.forEach(b=>b.onclick=()=>{buttons.forEach(x=>x.classList.remove("active"));b.classList.add("active");filter=b.dataset.filter;draw()});q.oninput=draw;
