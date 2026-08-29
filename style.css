@@ -608,15 +608,49 @@ main#panduan {
     border: 1px solid var(--glass-border);
     backdrop-filter: blur(10px);
     border-radius: var(--radius-md);
-    padding: 32px;
-    margin-bottom: 22px;
+    margin-bottom: 16px;
     scroll-margin-top: 96px;
     transition: border-color 0.25s var(--ease), background 0.25s var(--ease);
+    overflow: hidden;
 }
-.doc-card:hover { border-color: var(--glass-border-strong); background: var(--glass-bg-strong); }
+.doc-card:hover { border-color: var(--glass-border-strong); }
+.doc-card.open { background: var(--glass-bg-strong); border-color: var(--glass-border-strong); }
 .doc-card:target { border-color: rgba(163, 230, 53, 0.4); box-shadow: var(--glow-lime); }
 
-.doc-card h2, .doc-card h3 { font-size: 21px; font-weight: 800; color: var(--text-main); margin-bottom: 14px; letter-spacing: -0.01em; }
+.doc-toggle {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    padding: 26px 32px;
+    text-align: left;
+    font-family: inherit;
+    color: var(--text-main);
+}
+
+.doc-toggle h2, .doc-toggle h3 { font-size: 21px; font-weight: 800; color: var(--text-main); letter-spacing: -0.01em; margin: 0; }
+
+.doc-toggle .chevron {
+    flex-shrink: 0;
+    color: var(--text-muted);
+    transition: transform 0.3s var(--ease), color 0.25s var(--ease);
+}
+.doc-toggle:hover .chevron { color: var(--lime); }
+.doc-card.open .doc-toggle .chevron { transform: rotate(180deg); color: var(--lime); }
+
+.doc-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s var(--ease);
+}
+.doc-card.open .doc-body { max-height: 2400px; }
+
+.doc-body-inner { padding: 0 32px 30px; }
+
 .doc-card p, .doc-card ul, .doc-card ol { color: var(--text-muted); font-size: 14px; line-height: 1.85; margin-bottom: 12px; }
 .doc-card ul, .doc-card ol { margin-left: 20px; }
 .doc-card li { margin-bottom: 4px; }
@@ -669,5 +703,6 @@ footer { background: var(--bg-body-2); color: #ffffff; padding: 64px max(6vw, 24
     .filter-btn { white-space: nowrap; }
     .cards-grid { grid-template-columns: 1fr; }
     .docs-header h1 { font-size: 32px; }
-    .doc-card { padding: 22px; }
+    .doc-toggle { padding: 20px 22px; }
+    .doc-body-inner { padding: 0 22px 24px; }
 }

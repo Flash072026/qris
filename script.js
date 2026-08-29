@@ -63,4 +63,51 @@ document.addEventListener("DOMContentLoaded", () => {
             revealObserver.observe(card);
         });
     }
+
+    // Accordion: doc-card topics on panduan.html & kebijakan.html
+    const docCards = Array.from(document.querySelectorAll(".doc-card"));
+    if (docCards.length) {
+        function closeCard(card) {
+            card.classList.remove("open");
+            const toggle = card.querySelector(".doc-toggle");
+            if (toggle) toggle.setAttribute("aria-expanded", "false");
+        }
+
+        function openCard(card, { scroll = false } = {}) {
+            docCards.forEach(c => { if (c !== card) closeCard(c); });
+            card.classList.add("open");
+            const toggle = card.querySelector(".doc-toggle");
+            if (toggle) toggle.setAttribute("aria-expanded", "true");
+            if (scroll) {
+                requestAnimationFrame(() => {
+                    card.scrollIntoView({ behavior: "smooth", block: "start" });
+                });
+            }
+        }
+
+        docCards.forEach(card => {
+            const toggle = card.querySelector(".doc-toggle");
+            if (!toggle) return;
+            toggle.addEventListener("click", () => {
+                if (card.classList.contains("open")) {
+                    closeCard(card);
+                } else {
+                    openCard(card, { scroll: false });
+                }
+            });
+        });
+
+        // Open the topic referenced by the URL hash (e.g. from index.html links)
+        function openFromHash() {
+            const hash = window.location.hash.replace("#", "");
+            if (!hash) return;
+            const target = document.getElementById(hash);
+            if (target && target.classList.contains("doc-card")) {
+                openCard(target, { scroll: true });
+            }
+        }
+
+        openFromHash();
+        window.addEventListener("hashchange", openFromHash);
+    }
 });
