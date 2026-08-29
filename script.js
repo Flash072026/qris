@@ -46,8 +46,8 @@ document.addEventListener("DOMContentLoaded", () => {
         searchInput.addEventListener("input", filterAndSearch);
     }
 
-    // Subtle scroll-reveal for cards and promo sections
-    if ("IntersectionObserver" in window) {
+    // Subtle scroll-reveal for cards
+    if ("IntersectionObserver" in window && cards.length) {
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach((entry, i) => {
                 if (entry.isIntersecting) {
@@ -58,17 +58,9 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
 
-        if (cards.length) {
-            cards.forEach(card => {
-                card.classList.add("reveal");
-                revealObserver.observe(card);
-            });
-        }
-
-        const promoBlocks = Array.from(document.querySelectorAll(".reveal-block"));
-        promoBlocks.forEach(block => {
-            block.classList.add("reveal");
-            revealObserver.observe(block);
+        cards.forEach(card => {
+            card.classList.add("reveal");
+            revealObserver.observe(card);
         });
     }
 
