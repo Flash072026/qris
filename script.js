@@ -45,4 +45,22 @@ document.addEventListener("DOMContentLoaded", () => {
     if (searchInput) {
         searchInput.addEventListener("input", filterAndSearch);
     }
+
+    // Subtle scroll-reveal for cards
+    if ("IntersectionObserver" in window && cards.length) {
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry, i) => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transitionDelay = `${(i % 6) * 40}ms`;
+                    entry.target.classList.add("is-visible");
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -40px 0px" });
+
+        cards.forEach(card => {
+            card.classList.add("reveal");
+            revealObserver.observe(card);
+        });
+    }
 });
